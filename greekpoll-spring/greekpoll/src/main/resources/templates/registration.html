@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang:th="el"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3" xmlns:lang="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:background="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>GreekPoll</title>
+    <base href="/">
+    <!-- Bootstrap core CSS -->
+
+    <link rel="shortcut icon"   th:href="@{/img/poll.png}">
+
+    <link rel="stylesheet" href="/css/bootstrap.css" th:href="@{/css/bootstrap.css}"/>
+
+    <link rel="stylesheet" href="/font-awesome/css/font-awesome.css" th:href="@{/font-awesome/css/font-awesome.css}"/>
+
+
+    <link rel="stylesheet" href="/css/style.css" th:href="@{/css/style.css}"/>
+
+    <link rel="stylesheet" href="/css/style-responsive.css" th:href="@{/css/style-responsive.css}"/>
+    <link rel="stylesheet" href="/css/clock.css" th:href="@{/css/clock.css}"/>
+    <link rel="stylesheet" href="/css/scroll_bar.css" th:href="@{/css/scroll_bar.css}"/>
+
+
+
+</head>
+
+
+
+<body th:style="'background-image:url(' + @{/img/login-bg.png} + '); background-repeat: repeat; background-size: cover;'" onload="clock()">
+
+<noscript>
+
+    <div>
+        <div class="alert alert-danger" style="text-align: center">Παρακαλώ ενεργοποιείστε την javascript στον περιηγητή σας. </div>
+    </div>
+
+</noscript>
+
+
+
+<div id="myNav" class="overlay">
+
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    <div class="overlay-content">
+        <a th:href="@{/login}"><span style="color: #1a1402; font-size: 45px;"><center>GreekPoll </center></span></a>
+        <center> <a th:href="@{/login}" id="showtime">GreekPoll</a> </center>
+    </div>
+</div>
+
+<div id="login-page">
+    <div class="container">
+
+        <form class="form-login" th:action="@{/registration}" method="post" id="formLogin" th:object="${user}">
+
+            <div th:if="${param.success}">
+                <div class="alert alert-info" style="background-color:cadetblue;  color: white">Επιτυχής
+                    Εγγραφή
+                </div>
+            </div>
+
+            <div th:if="${param.error}">
+                <div class="alert alert-warning" style="background-color:#e39713;  color: white">Ανεπιτυχής
+                    Εγγραφή
+                </div>
+            </div>
+
+            <div th:if="${param.error2}">
+                <div class="alert alert-warning" style="background-color:#e39713;  color: white">Ανεπιτυχής
+                    Εγγραφή. Δοκιμάστε διαφορετικό ψευδώνυμο.
+                </div>
+            </div>
+
+
+            <h2 class="form-login-heading">Νέα Εγγραφή</h2>
+            <div class="login-wrap">
+                <br>
+
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+                <input type="text" class="form-control" id="inputSuccess" th:field="*{fullname}"  placeholder="Ονοματεπώνυμο"
+                       title="Ονοματεπώνυμο"
+                       autofocus="true" required="required" maxlength="50">
+
+                <br>
+                <input type="text" class="form-control" id="inputSuccess" th:field="*{gender}"
+                       title="Φύλο"   placeholder="Φύλο"
+                       autofocus="true"  maxlength="50">
+
+
+                <br>
+                <input type="text" class="form-control" id="inputSuccess" th:field="*{prefecture}"
+                       title="Νομαρχία"    placeholder="Νομαρχία"
+                       autofocus="true"  maxlength="50">
+                <br>
+                <input type="text" class="form-control" id="inputSuccess" th:field="*{municipality}"
+                       title="Δήμος"  placeholder="Δήμος"
+                       autofocus="true"  maxlength="50">
+                <br>
+                <input type="text" th:field="*{username}" class="form-control input-lg"
+                       title="Όνομα χρήστη (4 εως 10 Λατινικούς χαρακτήρες)"  placeholder="Όνομα χρήστη"
+                       autofocus="true" required="required" maxlength="10" pattern="^[A-Za-z][A-Za-z0-9]{3,}$"/>
+                <br>
+                <input type="text" class="form-control" id="inputSuccess" name="password"  th:field="*{password}"
+                       placeholder="κωδικός πρόσβασης"  th:name="password"
+                       pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{5,}$"
+                       autofocus="true"  required="required" oninput="showInfo()" >
+                <label id="showInfo" style="display: none; color: #f0ad4e; text-align: justify;"> &nbsp; Ο νέος κωδικός να εγγραφεί στην λατινική, απο τουλάχιστον 5 χαρακτήρες, με τουλάχιστον 1
+                    κεφαλαίο γράμμα, 1 μικρό γράμμα, 1 αριθμό και 1 ειδικό χαρακτήρα {@ $ ! % * ? &} </label>
+                <br>
+
+                <button class="btn btn-theme btn-block" type="submit" required="required"><i class="fa fa-lock"></i> Νέα Εγγραφή</button>
+                <hr>
+
+                <br>
+                <h2 class="form-signin-heading"><a href="/" th:href="@{/login}">Επιστροφή </a></h2>
+
+            </div>
+
+
+        </form>
+    </div>
+</div>
+
+<footer class="site-footer">
+    <div class="text-center">
+        2023 - GreekPoll
+    </div>
+</footer>
+
+
+<script type="text/javascript" th:src="@{/js/jquery.js}"></script>
+
+<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+
+
+
+<script type="text/javascript" th:src="@{/js/jquery.backstretch.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/clock.js}"></script>
+
+<script>
+function  showInfo() {
+
+document.getElementById("showInfo").style.display = "block";
+
+}
+</script>
+
+</body>
+</html>
